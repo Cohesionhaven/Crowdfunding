@@ -12,6 +12,7 @@ export const ThemeToggle: React.FC = () => {
       className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
+      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
     >
       <motion.div
         initial={false}
