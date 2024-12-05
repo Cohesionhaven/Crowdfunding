@@ -7,7 +7,7 @@ import { CampaignCard } from './CampaignCard';
 import { Loader2, Search, Filter, PlusCircle } from 'lucide-react';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/Select';
+import { Select } from '../ui/Select';
 
 export const CampaignList: React.FC = () => {
   const { campaigns, loading, error } = useSelector((state: RootState) => state.campaigns);
@@ -57,7 +57,7 @@ export const CampaignList: React.FC = () => {
     >
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
         <motion.h2
-          className="text-3xl font-bold text-gray-900 dark:text-white"
+          className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
@@ -70,7 +70,7 @@ export const CampaignList: React.FC = () => {
         >
           <Link
             to="/create"
-            className="inline-flex items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors duration-200"
+            className="inline-flex items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 dark:from-blue-700 dark:via-purple-700 dark:to-pink-700 dark:hover:from-blue-800 dark:hover:via-purple-800 dark:hover:to-pink-800 transition-colors duration-200"
           >
             <PlusCircle className="w-5 h-5 mr-2" />
             Create Campaign
@@ -90,24 +90,23 @@ export const CampaignList: React.FC = () => {
             placeholder="Search campaigns..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 pr-4 py-2 w-full bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 rounded-md"
+            className="pl-10 pr-4 py-2 w-full bg-white dark:bg-gray-800 bg-opacity-80 dark:bg-opacity-80 backdrop-blur-sm"
           />
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" />
         </div>
-        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-          <SelectTrigger className="w-full sm:w-48 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 rounded-md">
-            <SelectValue placeholder="All Categories" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="">All Categories</SelectItem>
-            {categories.map((category) => (
-              <SelectItem key={category} value={category}>
-                {category}
-              </SelectItem>
-            ))}
-          </SelectContent>
+        <Select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="w-full sm:w-48 bg-white dark:bg-gray-800 bg-opacity-80 dark:bg-opacity-80 backdrop-blur-sm"
+        >
+          <option value="">All Categories</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
         </Select>
-        <Button variant="outline" className="w-full sm:w-auto bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 rounded-md">
+        <Button variant="outline" className="w-full sm:w-auto bg-white dark:bg-gray-800 bg-opacity-80 dark:bg-opacity-80 backdrop-blur-sm">
           <Filter className="w-5 h-5 mr-2" />
           More Filters
         </Button>
@@ -135,7 +134,7 @@ export const CampaignList: React.FC = () => {
           </motion.div>
         ) : (
           <motion.div
-            className="text-center text-gray-500 dark:text-gray-400 p-8 bg-white dark:bg-gray-800 rounded-lg"
+            className="text-center text-gray-500 dark:text-gray-400 p-8 bg-white dark:bg-gray-800 bg-opacity-80 dark:bg-opacity-80 backdrop-blur-sm rounded-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
