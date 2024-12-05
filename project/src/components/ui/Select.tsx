@@ -1,31 +1,11 @@
-import React from 'react';
-import { cn } from '../../lib/utils';
+'use client'
 
-interface SelectProps {
-  value: string;
-  onValueChange: (value: string) => void;
-  children: React.ReactNode;
-  className?: string;
-}
+import * as React from 'react'
+import * as SelectPrimitive from '@radix-ui/react-select'
 
-export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  ({ className, children, onValueChange, value, ...props }, ref) => {
-    return (
-      <select
-        ref={ref}
-        value={value}
-        className={cn(
-          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
-          className
-        )}
-        onChange={(e) => onValueChange(e.target.value)}
-        {...props}
-      >
-        {children}
-      </select>
-    );
-  }
-);
-
-Select.displayName = 'Select';
+export const Select = SelectPrimitive.Root
+export const SelectTrigger = SelectPrimitive.Trigger
+export const SelectValue = SelectPrimitive.Value
+export const SelectContent = SelectPrimitive.Content
+export const SelectItem = SelectPrimitive.Item
 

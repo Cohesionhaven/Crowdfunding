@@ -7,6 +7,7 @@ import { Wallet, Menu, X, User, Rocket, ChevronDown } from 'lucide-react';
 import { useWeb3 } from '../../hooks/useWeb3';
 import { Button } from '../ui/Button';
 import { useAuth, UserButton } from '@clerk/clerk-react';
+import { ThemeToggle } from '../ui/ThemeToggle';
 
 export const Header: React.FC = () => {
   const { address, isConnected } = useSelector((state: RootState) => state.wallet);
@@ -34,7 +35,7 @@ export const Header: React.FC = () => {
 
   return (
     <motion.header
-      className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg"
+      className="bg-white dark:bg-gray-800 shadow-lg transition-colors duration-300"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: 'spring', stiffness: 100, damping: 15 }}
@@ -52,7 +53,7 @@ export const Header: React.FC = () => {
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.5 }}
               >
-                <Rocket className="h-8 w-8 text-white" />
+                <Rocket className="h-8 w-8 text-gray-800 dark:text-white" />
               </motion.div>
               <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-pink-200">
                 CrowdChain
@@ -67,7 +68,7 @@ export const Header: React.FC = () => {
               onHoverStart={() => setIsDropdownOpen(true)}
               onHoverEnd={() => setIsDropdownOpen(false)}
             >
-              <button className="flex items-center text-white hover:text-pink-200 transition-colors">
+              <button className="flex items-center text-gray-800 dark:text-white hover:text-pink-500 dark:hover:text-pink-300 transition-colors">
                 Explore <ChevronDown className="ml-1 h-4 w-4" />
               </button>
               <AnimatePresence>
@@ -76,18 +77,18 @@ export const Header: React.FC = () => {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                    className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5"
                   >
                     <div className="py-1">
                       <Link
                         to="/trending"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-gray-700"
                       >
                         Trending Campaigns
                       </Link>
                       <Link
                         to="/categories"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-gray-700"
                       >
                         Categories
                       </Link>
@@ -98,7 +99,7 @@ export const Header: React.FC = () => {
             </motion.div>
             <Link
               to="/create"
-              className="text-white hover:text-pink-200 transition-colors"
+              className="text-gray-800 dark:text-white hover:text-pink-500 dark:hover:text-pink-300 transition-colors"
             >
               Start a Campaign
             </Link>
@@ -106,7 +107,7 @@ export const Header: React.FC = () => {
               <>
                 <Link
                   to="/dashboard"
-                  className="text-white hover:text-pink-200 transition-colors"
+                  className="text-gray-800 dark:text-white hover:text-pink-500 dark:hover:text-pink-300 transition-colors"
                 >
                   Dashboard
                 </Link>
@@ -135,7 +136,7 @@ export const Header: React.FC = () => {
                 onClick={handleConnectWallet}
                 isLoading={isConnecting}
                 variant="primary"
-                className="bg-gradient-to-r from-pink-500 to-yellow-500 text-white"
+                className="bg-gradient-to-r from-pink-500 to-yellow-500 dark:from-pink-700 dark:to-yellow-700 text-white"
               >
                 <Wallet className="h-5 w-5 mr-2" />
                 {isConnected
@@ -143,13 +144,15 @@ export const Header: React.FC = () => {
                   : 'Connect Wallet'}
               </Button>
             </motion.div>
+            <ThemeToggle />
           </nav>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center">
+            <ThemeToggle />
             <motion.button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-md text-white hover:text-pink-200"
+              className="ml-4 p-2 rounded-md text-gray-800 dark:text-white hover:text-pink-500 dark:hover:text-pink-300"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -166,7 +169,7 @@ export const Header: React.FC = () => {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
-              className="md:hidden py-4 space-y-4"
+              className="md:hidden py-4 space-y-4 bg-white dark:bg-gray-800"
               initial="closed"
               animate="open"
               exit="closed"
@@ -175,21 +178,21 @@ export const Header: React.FC = () => {
             >
               <Link
                 to="/trending"
-                className="block px-4 py-2 text-white hover:bg-indigo-600 rounded-md"
+                className="block px-4 py-2 text-gray-800 dark:text-white hover:bg-indigo-600 dark:hover:bg-indigo-800 rounded-md"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Trending Campaigns
               </Link>
               <Link
                 to="/categories"
-                className="block px-4 py-2 text-white hover:bg-indigo-600 rounded-md"
+                className="block px-4 py-2 text-gray-800 dark:text-white hover:bg-indigo-600 dark:hover:bg-indigo-800 rounded-md"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Categories
               </Link>
               <Link
                 to="/create"
-                className="block px-4 py-2 text-white hover:bg-indigo-600 rounded-md"
+                className="block px-4 py-2 text-gray-800 dark:text-white hover:bg-indigo-600 dark:hover:bg-indigo-800 rounded-md"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Start a Campaign
@@ -198,7 +201,7 @@ export const Header: React.FC = () => {
                 <>
                   <Link
                     to="/dashboard"
-                    className="block px-4 py-2 text-white hover:bg-indigo-600 rounded-md"
+                    className="block px-4 py-2 text-gray-800 dark:text-white hover:bg-indigo-600 dark:hover:bg-indigo-800 rounded-md"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Dashboard
@@ -217,7 +220,7 @@ export const Header: React.FC = () => {
               ) : (
                 <Link
                   to="/sign-in"
-                  className="block px-4 py-2 text-white hover:bg-indigo-600 rounded-md"
+                  className="block px-4 py-2 text-gray-800 dark:text-white hover:bg-indigo-600 dark:hover:bg-indigo-800 rounded-md"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Sign In
@@ -228,7 +231,7 @@ export const Header: React.FC = () => {
                   onClick={handleConnectWallet}
                   isLoading={isConnecting}
                   variant="primary"
-                  className="w-full bg-gradient-to-r from-pink-500 to-yellow-500 text-white"
+                  className="w-full bg-gradient-to-r from-pink-500 to-yellow-500 dark:from-pink-700 dark:to-yellow-700 text-white"
                 >
                   <Wallet className="h-5 w-5 mr-2" />
                   {isConnected
@@ -243,3 +246,4 @@ export const Header: React.FC = () => {
     </motion.header>
   );
 };
+

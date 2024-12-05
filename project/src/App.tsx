@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux';
-import { ClerkProvider, useClerk } from '@clerk/clerk-react';
+import { ClerkProvider } from '@clerk/clerk-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,55 +13,57 @@ import { SignIn } from './components/auth/SignIn';
 import { SignUp } from './components/auth/SignUp';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { Footer } from './components/layout/Footer';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 const queryClient = new QueryClient();
+const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 function App() {
-  const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-  
-  if (!CLERK_PUBLISHABLE_KEY) {
-    console.error('Missing Clerk Publishable Key');
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-red-500">Error: Missing Clerk Configuration</p>
-      </div>
-    );
-  }
-
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
-          <BrowserRouter>
-            <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100">
-              <Header />
-              <main className="container mx-auto px-4 py-8">
-                <Routes>
-                  <Route path="/" element={<CampaignList />} />
-                  <Route path="/sign-in/*" element={<SignIn />} />
-                  <Route path="/sign-up/*" element={<SignUp />} />
-                  <Route path="/campaign/:id" element={<CampaignDetails />} />
-                  <Route
-                    path="/create"
-                    element={
-                      <ProtectedRoute>
-                        <CreateCampaign />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/dashboard"
-                    element={
-                      <ProtectedRoute>
-                        <UserDashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-                </Routes>
-              </main>
-              <Footer />
-            </div>
-          </BrowserRouter>
+          <ThemeProvider>
+            <BrowserRouter>
+              <div className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300 flex flex-col">
+                <motion.div
+                  className="flex-grow"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Header />
+                  <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    <AnimatePresence mode="wait">
+                      <Routes>
+                        <Route path="/" element={<CampaignList />} />
+                        <Route path="/sign-in/*" element={<SignIn />} />
+                        <Route path="/sign-up/*" element={<SignUp />} />
+                        <Route path="/campaign/:id" element={<CampaignDetails />} />
+                        <Route
+                          path="/create"
+                          element={
+                            <ProtectedRoute>
+                              <CreateCampaign />
+                            </ProtectedRoute>
+                          }
+                        />
+                        <Route
+                          path="/dashboard"
+                          element={
+                            <ProtectedRoute>
+                              <UserDashboard />
+                            </ProtectedRoute>
+                          }
+                        />
+                      </Routes>
+                    </AnimatePresence>
+                  </main>
+                </motion.div>
+                <Footer />
+              </div>
+            </BrowserRouter>
+          </ThemeProvider>
         </QueryClientProvider>
       </Provider>
     </ClerkProvider>
@@ -69,3 +71,4 @@ function App() {
 }
 
 export default App;
+
