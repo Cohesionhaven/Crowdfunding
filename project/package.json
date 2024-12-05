@@ -7,7 +7,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "test": "vitest",
-    "dev": "sudo docker-compose up -d && vite",
+    "dev": "docker-compose up -d && vite",
     "test:coverage": "vitest run --coverage",
     "preview": "vite preview"
   },
